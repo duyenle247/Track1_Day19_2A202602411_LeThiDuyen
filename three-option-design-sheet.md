@@ -34,11 +34,11 @@
 ## Chặng 2 — Ba Solution Options & Comparison Contract (Gate 2)
 
 ### 1. Bảng quy ước chung (Những thứ giữ nguyên 100%)
-- **Target user:** Học viên học trực tuyến trên nền tảng web/desktop.
-- **Situation:** Đang xem slide bài giảng bài học phức tạp (Ví dụ: Slide về *Thuật toán Gradient Descent trong Machine Learning*).
-- **Task giao cho tester:** *"Khi gặp đoạn kiến thức khó hiểu trên slide này, hãy dùng công cụ để vượt qua điểm tắc và tiếp tục bài học."*
-- **Desired outcome:** Nắm được khái niệm tiên quyết cần bù đắp trong dưới 2 phút mà không làm mất hoàn toàn luồng học chính.
-- **Content / Data fixture:** Cùng 1 slide bài giảng về *Gradient Descent*, chứa đồ thị hàm mất mát, công thức đạo hàm riêng và learning rate.
+- **Target user:** Học viên học trực tuyến trên nền tảng VLearn web/desktop.
+- **Situation:** Đang xem slide bài giảng Day 18+19: *Design the Experiment - Human-Centered AI Design*, dừng lại ở Slide 7 (*"Cùng một pain có thể dẫn tới nhiều cách giải"*).
+- **Task giao cho tester:** *"Khi gặp tình huống người học trả lời sai lần thứ hai và không biết tiếp tục thế nào, hãy dùng công cụ trợ giúp trên màn hình để hiểu rõ sự khác biệt giữa các cơ chế và tiếp tục bài học."*
+- **Desired outcome:** Nắm được khái niệm nền tảng còn thiếu (Initiative Spectrum) trong dưới 1 phút mà không làm mất hoàn toàn luồng học chính.
+- **Content / Data fixture:** Cùng 1 slide bài giảng số 7 của VLearn: *Cùng một pain có thể dẫn tới nhiều cách giải* kèm 3 cột so sánh (A User-led, B Collaborative, C Proactive).
 
 ---
 
@@ -78,16 +78,16 @@
 ## Chặng 4 — Prototype Blueprint & Annotations (Gate 4)
 
 ### Common Frame Structure (70% dùng chung):
-- Màn hình player bài giảng VLearn tỉ lệ 16:9.
-- Phía trên: Tiêu đề bài học *"Bài 4: Tối ưu hóa với Gradient Descent"*.
-- Trung tâm: Slide bài giảng có đồ thị hàm mất mát cong parabol, công thức đạo hàm và learning rate $\alpha$.
-- Phía dưới: Thanh điều khiển video (Play, Pause, Progress bar tại phút 08:30).
+- Màn hình slide viewer bài giảng VLearn tỉ lệ 16:9, watermark `26AI.DUYENLT@VINUNI.EDU.VN`.
+- Phía trên: Tiêu đề bài học *"Ngày 3 · Day 18+19 Design the Experiment - Human-Centered AI Design"*.
+- Trung tâm: Slide số 7 *"Cùng một pain có thể dẫn tới nhiều cách giải"*, hộp tình huống trả lời sai lần 2, 3 cột A (User-led), B (Collaborative), C (Proactive).
+- Phía dưới: Thanh công cụ ghi chú, con trỏ, vẽ, highlight, số trang `‹ 7 / 23 ›`.
 
 ### Prototype Annotations (Nội bộ nhóm quan sát):
-- **OPTION A Annotation:**
-  - *We expect the tester to:* Bấm vào nút "Hỏi AI điểm tắc", khoanh vùng công thức đạo hàm, trả lời câu hỏi trắc nghiệm chẩn đoán.
-  - *Watch for:* Tester có ngại làm quiz không? Có hiểu vì sao AI lại hỏi ngược lại mình không?
-  - *Do not explain:* Không chỉ cho tester nút trắc nghiệm hoặc giải thích câu hỏi hộ tester.
+- **OPTION A Annotation (Lê Thị Duyên):**
+  - *We expect the tester to:* Bấm vào nút ✨ Sparkles phát sáng trên slide (hoặc nút `Help / Chẩn đoán` ở cột A), đọc câu hỏi chẩn đoán và chọn 1 đáp án.
+  - *Watch for:* Tester có hiểu vì sao AI hỏi ngược lại mình không? Thẻ giải thích bù đắp kiến thức có đủ nhanh và rõ không? Nút thoát hiểm [✕] và [Thử lại] có dễ tìm không?
+  - *Do not explain:* Không chỉ cho tester nút nào cần bấm.
 - **OPTION B Annotation:**
   - *We expect the tester to:* Liếc nhìn panel bên phải, nhận diện được node màu vàng "Đạo hàm riêng", click vào để xem tóm tắt.
   - *Watch for:* Tester có bị phân tâm khỏi video không? Sơ đồ có quá tải thông tin không?

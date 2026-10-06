@@ -21,14 +21,14 @@
 
 ## 2. Dữ liệu chuẩn & 70% Common Context dùng chung
 
-- **Context Screen:** Màn hình video player bài giảng giao diện web VLearn.
-- **Tiêu đề bài học:** *"Khóa học Machine Learning cơ bản — Bài 4: Tối ưu hóa mô hình với Gradient Descent"*.
+- **Context Screen:** Màn hình slide viewer bài giảng giao diện web VLearn.
+- **Tiêu đề bài học:** *"Ngày 3 · Day 18+19 Design the Experiment - Human-Centered AI Design"*.
 - **Content Fixture:**
-  - Slide hiển thị tại phút 08:30:
-    - Tiêu đề slide: *"Cập nhật trọng số với Đạo hàm riêng và Learning Rate"*.
-    - Công thức: $\theta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta)$.
-    - Đồ thị cong minh họa hướng dốc đi xuống cực tiểu cục bộ.
-- **Điểm gây tắc nghẽn (Intended Bottleneck):** Người học không hiểu ký hiệu đạo hàm riêng $\frac{\partial}{\partial \theta_j}$ và tại sao phải trừ đi thay vì cộng vào.
+  - Slide hiển thị tại trang 7 / 23:
+    - Tiêu đề slide: *"Cùng một pain có thể dẫn tới nhiều cách giải"*.
+    - Hộp tình huống: *"TÌNH HUỐNG: Người học vừa trả lời sai lần thứ hai và không biết tiếp tục thế nào."*.
+    - 3 cột phân loại: A (User-led), B (Collaborative), C (Proactive).
+- **Điểm gây tắc nghẽn (Intended Bottleneck):** Người học bị lẫn giữa cơ chế Collaborative (AI hỏi xác nhận) và Proactive (AI tự hành động), không biết cơ chế nào phù hợp với tình huống.
 
 ---
 

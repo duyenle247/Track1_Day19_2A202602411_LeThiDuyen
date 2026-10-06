@@ -36,9 +36,9 @@
 
 ## 4. Đóng góp của Tôi trong Nhóm (Personal Contributions)
 - **Thiết kế giải pháp & Micro-prototype:** 
-  - Trực tiếp phụ trách thiết kế và xây dựng **Option A (In-Context Prerequisite Diagnosis)** trên Figma.
-  - Đồng thiết kế khung **70% Common Context** (màn hình player bài giảng VLearn, slide về Gradient Descent và công thức đạo hàm riêng) để đảm bảo cả 3 option có tính so sánh chuẩn xác.
-- **Human–AI Design:** Xác định 4 quyết định thiết kế cho Option A (Expectation, Role & Agency, Evidence & Uncertainty, và đặc biệt là hệ thống nút thoát hiểm Recovery Control: [X], [Chọn lại vùng slide], [Xem ngay giải thích]).
+  - Trực tiếp phụ trách thiết kế và xây dựng **Option A (In-Context Prerequisite Diagnosis)** trên code interactive HTML (`prototype.html`) và Figma.
+  - Đồng thiết kế khung **70% Common Context** (màn hình slide viewer bài giảng VLearn Day 18+19, slide 7 *"Cùng một pain có thể dẫn tới nhiều cách giải"*) để đảm bảo cả 3 option có tính so sánh chuẩn xác.
+- **Human–AI Design:** Xác định 4 quyết định thiết kế cho Option A (Expectation, Role & Agency [Ask], Evidence & Uncertainty, và đặc biệt là hệ thống nút thoát hiểm Recovery Control: [✕ Đóng], [Thử lại], [Bỏ qua quiz]).
 - **Facilitation & Testing:** Trực tiếp đóng vai trò Facilitator, điều phối phiên kiểm thử toàn bộ 3 phương án A/B/C với Tester 1 (T01 - Sinh viên CNTT ngoài nhóm) theo đúng nguyên tắc không dẫn dắt.
 - **Tổng hợp & Phân tích:** Độc lập thực hiện phân tích 4 lớp (*Observed, Interpreted, Decided, Still Unproven*) cho Feedback 1; đồng thời cùng nhóm thảo luận, đối chiếu ma trận kết quả 3 phiên và chốt định hướng Group Next Change.
 
