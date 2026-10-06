@@ -1,910 +1,1144 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VLearn — Option A Prototype (In-Context Diagnostic Tutor) · Lê Thị Duyên</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VLearn · AI Tutor Option A</title>
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --border: #e2e8f0;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --danger: #dc2626;
-      --success: #16a34a;
+      --blue-950: #0b1f44;
+      --blue-900: #12356b;
+      --blue-800: #174a8b;
+      --blue-700: #1d5fb8;
+      --blue-600: #256fd8;
+      --blue-500: #3b82f6;
+      --blue-400: #60a5fa;
+      --blue-300: #93c5fd;
+      --blue-200: #bfdbfe;
+      --blue-100: #dbeafe;
+      --blue-50: #eff6ff;
+      --slate-950: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --green: #16a34a;
+      --green-soft: #effcf3;
+      --white: #fff;
+      --bg: #f4f8fc;
+      --shadow: 0 18px 46px rgba(15, 23, 42, .10);
+      --shadow-soft: 0 8px 22px rgba(15, 23, 42, .07);
     }
 
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      box-sizing: border-box
     }
 
+    html,
     body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      user-select: none;
+      margin: 0;
+      height: 100%;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--slate-950)
     }
 
-    /* TOP ANNOTATION BAR (Dành cho Tester & Giảng viên) */
-    .top-annotation-bar {
-      background: #0f172a;
-      color: #f8fafc;
-      padding: 8px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      border-bottom: 2px solid #2563eb;
-      z-index: 100;
-    }
-    .badge-opt {
-      background: #2563eb;
-      color: #fff;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-      letter-spacing: 0.5px;
-    }
-    .reset-btn {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .reset-btn:hover {
-      background: rgba(255, 255, 255, 0.22);
+    button {
+      font: inherit;
+      cursor: pointer
     }
 
-    /* VLEARN HEADER */
-    .vlearn-header {
-      background: #fff;
-      height: 52px;
-      border-bottom: 1px solid var(--border);
+    .tester {
+      height: 34px;
+      background: linear-gradient(90deg, #0f2a57, #123c7a);
+      color: #dbeafe;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      flex-shrink: 0;
+      font-size: 11px;
+      letter-spacing: .02em
     }
 
-    .header-left {
-      display: flex;
+    .tester strong {
+      color: #fff
+    }
+
+    .reset {
+      border: 1px solid rgba(255, 255, 255, .2);
+      background: rgba(255, 255, 255, .08);
+      color: #fff;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px
+    }
+
+    .app {
+      height: calc(100vh - 34px);
+      display: grid;
+      grid-template-rows: 68px 1fr;
+      min-width: 1320px
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--slate-200);
+      display: grid;
+      grid-template-columns: 1fr auto auto;
       align-items: center;
-      gap: 12px;
-    }
-    .back-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #64748b;
-      font-size: 16px;
-    }
-    .back-btn:hover { background: #f1f5f9; }
-
-    .course-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1e293b;
+      gap: 18px;
+      padding: 0 22px;
+      box-shadow: 0 2px 12px rgba(15, 23, 42, .03)
     }
 
-    .header-right {
+    .head-left {
       display: flex;
       align-items: center;
       gap: 14px;
+      min-width: 0
     }
 
-    .lang-badge {
-      display: flex;
-      border: 1px solid #e2e8f0;
-      border-radius: 4px;
-      overflow: hidden;
-      font-size: 11px;
-      font-weight: 600;
-    }
-    .lang-badge span { padding: 3px 6px; cursor: pointer; }
-    .lang-badge span.active { background: #dc2626; color: #fff; }
-
-    .progress-info {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: #64748b;
-    }
-    .progress-bar-line {
-      width: 80px;
-      height: 6px;
-      background: #e2e8f0;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      width: 45%;
-      height: 100%;
-      background: #3b82f6;
-    }
-
-    .btn-top-ask {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-top-ask:hover {
-      background: #dbeafe;
-    }
-
-    .avatar-user {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #dbeafe;
-      color: #1e40af;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    /* WORKSPACE */
-    .app-workspace {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    /* LEFT SIDEBAR */
-    .sidebar {
-      width: 270px;
-      background: #fff;
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-    }
-    .sidebar-header {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-    .lesson-list {
-      padding: 10px 0;
-      overflow-y: auto;
-      flex: 1;
-    }
-    .lesson-group-title {
-      padding: 8px 16px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .lesson-item {
-      padding: 10px 16px;
+    .brand {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
-      color: #334155;
-      cursor: pointer;
-    }
-    .lesson-item:hover { background: #f8fafc; }
-    .lesson-item.active {
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 600;
-      border-left: 3px solid #2563eb;
-    }
-    .badge-studying {
-      margin-left: auto;
-      background: #dbeafe;
-      color: #1e40af;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 4px;
+      font-weight: 900;
+      color: var(--blue-800);
+      font-size: 20px
     }
 
-    /* CENTER SLIDE VIEWER */
-    .slide-viewer-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      background: #f1f5f9;
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--blue-500), #7dd3fc);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 14px
+    }
+
+    .divider {
+      width: 1px;
+      height: 28px;
+      background: var(--slate-200)
+    }
+
+    .back {
+      border: none;
+      background: transparent;
+      color: var(--slate-600);
+      font-size: 20px
+    }
+
+    .lesson-title {
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
       overflow: hidden;
-      position: relative;
+      text-overflow: ellipsis;
+      color: var(--slate-800)
     }
 
-    .slide-stage {
-      flex: 1;
+    .concept-pill {
+      background: var(--blue-50);
+      color: var(--blue-700);
+      border: 1px solid var(--blue-100);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 900
+    }
+
+    .head-right {
       display: flex;
       align-items: center;
-      justify-content: center;
-      position: relative;
+      gap: 12px
     }
 
-    /* THE SLIDE CANVAS */
-    .slide-card {
-      width: 100%;
-      max-width: 960px;
-      aspect-ratio: 16 / 9;
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
-      padding: 36px 42px;
+    .lang {
       display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      overflow: hidden
     }
 
-    /* SLIDE WATERMARK */
+    .lang button {
+      border: none;
+      background: #fff;
+      padding: 7px 9px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--slate-500)
+    }
+
+    .lang .active {
+      background: var(--blue-600);
+      color: #fff
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--slate-600);
+      font-weight: 800
+    }
+
+    .track {
+      width: 120px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--slate-100);
+      overflow: hidden
+    }
+
+    .fill {
+      height: 100%;
+      width: 3%;
+      background: linear-gradient(90deg, var(--blue-600), var(--blue-400))
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--blue-100);
+      color: var(--blue-800);
+      font-weight: 900
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 300px minmax(700px, 1fr) 360px;
+      min-height: 0
+    }
+
+    .sidebar {
+      background: #fff;
+      border-right: 1px solid var(--slate-200);
+      overflow: auto;
+      padding: 16px 12px
+    }
+
+    .side-title {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 6px 8px 16px
+    }
+
+    .section {
+      margin-bottom: 16px
+    }
+
+    .section h3 {
+      font-size: 12px;
+      margin: 0 8px 8px;
+      font-weight: 900;
+      color: var(--slate-800)
+    }
+
+    .item {
+      padding: 11px 12px;
+      border-radius: 11px;
+      margin: 4px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+      color: var(--slate-700)
+    }
+
+    .item:hover {
+      background: var(--slate-50)
+    }
+
+    .item.active {
+      background: var(--blue-50);
+      border-left: 3px solid var(--blue-600);
+      color: var(--blue-800);
+      font-weight: 800
+    }
+
+    .meta {
+      font-size: 10px;
+      color: var(--slate-400);
+      white-space: nowrap
+    }
+
+    .studying {
+      color: var(--blue-700);
+      font-size: 10px;
+      font-weight: 900
+    }
+
+    .center {
+      overflow: auto;
+      padding: 18px 20px 24px
+    }
+
+    .slide-wrap {
+      max-width: 980px;
+      margin: 0 auto
+    }
+
+    .slide-card {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      padding: 14px
+    }
+
+    .slide {
+      position: relative;
+      aspect-ratio: 16/9;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      padding: 30px 34px 76px
+    }
+
+    .slide:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, .03), transparent 40%);
+      pointer-events: none
+    }
+
     .watermark {
       position: absolute;
-      top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) rotate(-25deg);
-      font-size: 24px;
-      font-weight: 800;
-      color: rgba(226, 232, 240, 0.5);
-      pointer-events: none;
-      letter-spacing: 2px;
-      white-space: nowrap;
+      top: 48%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      color: rgba(100, 116, 139, .07);
+      white-space: nowrap
     }
 
-    .slide-h1 {
-      font-size: 26px;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 6px;
-    }
-    .slide-h1 span.pain { color: #dc2626; }
-
-    .slide-subtitle {
-      font-size: 15px;
-      color: #64748b;
-      margin-bottom: 16px;
+    .slide h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.18;
+      letter-spacing: -.02em;
+      position: relative;
+      z-index: 1
     }
 
-    .context-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-left: 4px solid #2563eb;
-      padding: 10px 14px;
-      border-radius: 6px;
-      font-size: 13px;
-      color: #334155;
-      margin-bottom: 22px;
+    .slide h1 .pain {
+      color: var(--blue-600)
     }
 
-    /* 3 MECHANISMS GRID */
-    .columns-row {
+    .subtitle {
+      margin-top: 7px;
+      color: var(--slate-500);
+      font-size: 14px;
+      position: relative;
+      z-index: 1
+    }
+
+    .context {
+      margin: 18px 0;
+      border: 1px solid var(--slate-200);
+      border-left: 4px solid var(--blue-500);
+      border-radius: 10px;
+      padding: 11px 13px;
+      background: var(--slate-50);
+      font-size: 12px;
+      color: var(--slate-700);
+      position: relative;
+      z-index: 1
+    }
+
+    .context strong {
+      font-size: 10px;
+      letter-spacing: .06em;
+      color: var(--blue-700)
+    }
+
+    .cols {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      flex: 1;
-    }
-
-    .col-card {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-    }
-    .col-card.focused-col {
-      border: 2px solid #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      gap: 12px;
       position: relative;
-    }
-    .focused-col-badge {
-      position: absolute;
-      top: -10px;
-      right: 12px;
-      background: #2563eb;
-      color: #fff;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
+      z-index: 1
     }
 
-    .col-title {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .col-title.col-a { color: #2563eb; }
-    .col-title.col-b { color: #d97706; }
-    .col-title.col-c { color: #7c3aed; }
-
-    .col-mockup {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      height: 80px;
-      margin-bottom: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 11px;
-    }
-
-    .col-field {
-      font-size: 11px;
-      color: #475569;
-      margin-bottom: 4px;
-    }
-    .col-field strong {
-      display: inline-block;
-      width: 76px;
-      color: #1e293b;
-    }
-
-    /* FLOATING AI SPARKLES BUTTON ON SLIDE (CRITICAL TRIGGER) */
-    .sparkles-button {
-      position: absolute;
-      top: 24px;
-      right: 28px;
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
-      border: 2px solid #fff;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      z-index: 50;
-    }
-    .sparkles-button:hover {
-      transform: scale(1.12);
-      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.55);
-    }
-    .pulse-effect {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 2px solid #3b82f6;
-      animation: pulseAnim 2s infinite;
-    }
-    @keyframes pulseAnim {
-      0% { transform: scale(1); opacity: 0.9; }
-      100% { transform: scale(1.6); opacity: 0; }
-    }
-
-    /* ======================================================== */
-    /* OPTION A: IN-CONTEXT PREREQUISITE DIAGNOSTIC POPUP */
-    /* ======================================================== */
-    .diagnostic-popup {
-      position: absolute;
-      bottom: 24px;
-      right: 28px;
-      width: 380px;
-      background: #ffffff;
+    .mech {
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
-      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(37, 99, 235, 0.15);
-      padding: 20px;
-      z-index: 100;
-      animation: popupIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      border-top: 4px solid #2563eb;
-    }
-    @keyframes popupIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      background: #fff;
+      overflow: hidden;
+      min-height: 216px;
+      display: flex;
+      flex-direction: column
     }
 
-    .popup-header {
+    .mech-head {
+      padding: 12px;
+      border-bottom: 1px solid var(--slate-100);
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 12px;
+      align-items: center
     }
 
-    .step-tag {
-      font-size: 10px;
-      font-weight: 700;
-      background: #eff6ff;
-      color: #1d4ed8;
-      padding: 2px 7px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 6px;
-    }
-
-    .popup-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-close-popup {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      cursor: pointer;
-      font-size: 18px;
-      width: 26px;
-      height: 26px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-    }
-    .btn-close-popup:hover {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
-
-    .popup-body-text {
+    .mech-head h3 {
       font-size: 13px;
-      color: #334155;
-      line-height: 1.5;
-      margin-bottom: 14px;
+      margin: 0
     }
 
-    .quiz-options {
+    .badge {
+      font-size: 9px;
+      font-weight: 900;
+      border-radius: 999px;
+      padding: 4px 6px;
+      background: var(--blue-50);
+      color: var(--blue-700)
+    }
+
+    .mech-body {
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-bottom: 14px;
+      gap: 10px;
+      flex: 1
     }
 
-    .quiz-btn {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      color: #1e293b;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.15s;
-      line-height: 1.4;
-    }
-    .quiz-btn:hover {
-      background: #eff6ff;
-      border-color: #93c5fd;
-      color: #1d4ed8;
-      transform: translateX(2px);
+    .sim {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 11px;
+      line-height: 1.45
     }
 
-    /* CARD RESULT (STEP 2/2) */
-    .result-box {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 8px;
-      padding: 14px;
-      font-size: 12px;
-      color: #166534;
-      line-height: 1.55;
-      margin-bottom: 14px;
-    }
-
-    .popup-actions {
+    .btn-row {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      margin-top: 8px
     }
 
-    .action-btn {
-      flex: 1;
-      padding: 9px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: all 0.15s;
-    }
-    .btn-continue {
-      background: #2563eb;
-      color: #fff;
-    }
-    .btn-continue:hover {
-      background: #1d4ed8;
-    }
-    .btn-retry {
-      background: #f1f5f9;
-      color: #475569;
-    }
-    .btn-retry:hover {
-      background: #e2e8f0;
-    }
-
-    /* BOTTOM CONTROLS */
-    .bottom-bar {
+    .tiny {
+      border: 1px solid var(--slate-300);
       background: #fff;
-      height: 48px;
       border-radius: 8px;
-      border: 1px solid var(--border);
-      margin-top: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
+      padding: 6px 8px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--slate-700)
     }
-    .tools-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+
+    .tiny.primary {
+      background: var(--blue-50);
+      border-color: var(--blue-200);
+      color: var(--blue-700)
     }
-    .tool-btn {
+
+    .spec {
+      font-size: 10px;
+      color: var(--slate-500);
+      line-height: 1.45;
+      margin-top: auto
+    }
+
+    .spec strong {
+      color: var(--slate-700)
+    }
+
+    .toolbar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 56px;
+      border-top: 1px solid var(--slate-200);
+      background: rgba(255, 255, 255, .96);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 12px;
+      z-index: 3
+    }
+
+    .tools {
+      display: flex;
+      gap: 4px
+    }
+
+    .tool {
       width: 32px;
       height: 32px;
-      border-radius: 6px;
       border: none;
       background: transparent;
-      color: #64748b;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
+      border-radius: 8px;
+      color: var(--slate-600)
     }
-    .tool-btn:hover { background: #f1f5f9; color: #0f172a; }
 
-    /* HINT TOAST */
-    .toast-guide {
+    .tool:hover {
+      background: var(--slate-100)
+    }
+
+    .pager {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--slate-700)
+    }
+
+    .notes {
+      justify-self: end;
+      border: 1px solid var(--slate-200);
+      background: #fff;
+      border-radius: 8px;
+      padding: 7px 9px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--slate-700)
+    }
+
+    .spark {
       position: absolute;
       top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1e293b;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
       color: #fff;
-      padding: 8px 16px;
-      border-radius: 20px;
+      font-size: 20px;
+      box-shadow: 0 0 0 7px rgba(59, 130, 246, .08), 0 12px 26px rgba(37, 111, 216, .28);
+      z-index: 5;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+      50% {
+        box-shadow: 0 0 0 12px rgba(59, 130, 246, .03), 0 14px 30px rgba(37, 111, 216, .32)
+      }
+    }
+
+    .after-slide {
+      max-width: 980px;
+      margin: 12px auto 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center
+    }
+
+    .feedback {
       font-size: 12px;
-      font-weight: 500;
+      color: var(--slate-600)
+    }
+
+    .next {
+      border: none;
+      background: var(--blue-700);
+      color: #fff;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 12px;
+      font-weight: 900
+    }
+
+    .ai-panel {
+      background: linear-gradient(180deg, #f7fbff, #eef6ff);
+      border-left: 1px solid var(--blue-100);
+      padding: 14px;
+      overflow: auto
+    }
+
+    .ai-shell {
+      background: #fff;
+      border: 1px solid var(--blue-100);
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden
+    }
+
+    .ai-head {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--blue-100);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, #fff, #f8fbff)
+    }
+
+    .ai-title {
       display: flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      z-index: 90;
-      animation: fadeIn 0.3s;
+      gap: 9px;
+      font-weight: 900;
+      color: var(--blue-900);
+      font-size: 15px
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translate(-50%, -6px); }
-      to { opacity: 1; transform: translate(-50%, 0); }
+
+    .toggle {
+      width: 42px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--blue-600);
+      position: relative
+    }
+
+    .toggle:after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      right: 3px;
+      top: 3px
+    }
+
+    .ai-copy {
+      padding: 12px 16px 0;
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--slate-500)
+    }
+
+    .suggestion {
+      margin: 12px;
+      border: 1px solid var(--blue-100);
+      border-radius: 14px;
+      background: #fff;
+      padding: 12px
+    }
+
+    .sug-head {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start
+    }
+
+    .sug-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--blue-50);
+      display: grid;
+      place-items: center;
+      color: var(--blue-700);
+      font-size: 16px;
+      flex: 0 0 auto
+    }
+
+    .sug-title {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--slate-800);
+      margin-bottom: 4px
+    }
+
+    .sug-desc {
+      font-size: 10px;
+      color: var(--slate-500);
+      line-height: 1.45
+    }
+
+    .sug-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px
+    }
+
+    .apply {
+      border: none;
+      background: var(--blue-600);
+      color: #fff;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 10px;
+      font-weight: 900
+    }
+
+    .preview,
+    .skip {
+      border: 1px solid var(--slate-200);
+      background: #fff;
+      color: var(--slate-600);
+      border-radius: 8px;
+      padding: 7px 9px;
+      font-size: 10px;
+      font-weight: 800
+    }
+
+    .skip {
+      border: none
+    }
+
+    .ai-footer {
+      margin: 12px;
+      border: 1px dashed var(--blue-200);
+      border-radius: 12px;
+      padding: 11px;
+      background: var(--blue-50);
+      font-size: 10px;
+      color: var(--blue-800);
+      line-height: 1.45
+    }
+
+    .modal {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      width: 420px;
+      background: #fff;
+      border: 1px solid var(--blue-200);
+      border-top: 5px solid var(--blue-600);
+      border-radius: 18px;
+      box-shadow: 0 28px 70px rgba(15, 23, 42, .23);
+      padding: 16px;
+      z-index: 50;
+      opacity: 0;
+      transform: translateY(18px);
+      pointer-events: none;
+      transition: .22s
+    }
+
+    .modal.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto
+    }
+
+    .close {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 8px;
+      background: var(--slate-100);
+      color: var(--slate-500)
+    }
+
+    .step {
+      display: inline-flex;
+      border-radius: 999px;
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      color: var(--blue-700);
+      padding: 5px 8px;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .05em;
+      margin-bottom: 9px
+    }
+
+    .modal h2 {
+      font-size: 18px;
+      margin: 0 36px 8px 0
+    }
+
+    .modal p {
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--slate-600);
+      margin: 0
+    }
+
+    .answers {
+      display: grid;
+      gap: 8px;
+      margin-top: 13px
+    }
+
+    .answer {
+      border: 1px solid var(--slate-200);
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--slate-700)
+    }
+
+    .answer:hover {
+      background: var(--blue-50);
+      border-color: var(--blue-200);
+      color: var(--blue-700)
+    }
+
+    .knowledge {
+      margin-top: 12px;
+      background: var(--green-soft);
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 11px
+    }
+
+    .knowledge p {
+      color: #166534;
+      font-size: 11px
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px
+    }
+
+    .done {
+      flex: 1;
+      border: none;
+      background: var(--green);
+      color: #fff;
+      border-radius: 9px;
+      padding: 9px 10px;
+      font-size: 11px;
+      font-weight: 900
+    }
+
+    .retry {
+      border: 1px solid var(--slate-200);
+      background: #fff;
+      color: var(--slate-700);
+      border-radius: 9px;
+      padding: 9px 10px;
+      font-size: 11px;
+      font-weight: 800
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 18px);
+      background: var(--blue-950);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 800;
+      opacity: 0;
+      transition: .2s;
+      z-index: 80
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0)
     }
   </style>
 </head>
+
 <body>
-
-  <!-- TOP TESTER & FACILITATOR BAR -->
-  <div class="top-annotation-bar">
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <span class="badge-opt">OPTION A PROTOTYPE</span>
-      <span><strong>In-Context Prerequisite Diagnosis (User-led AI Tutor)</strong></span>
-      <span style="color: #94a3b8;">· Phụ trách: <strong>Lê Thị Duyên (2A202602411)</strong></span>
-    </div>
-
-    <button class="reset-btn" onclick="resetPrototype()" title="Reset trạng thái về ban đầu">
-      <span>🔄</span> Reset Trạng Thái
-    </button>
+  <div class="tester">
+    <div><strong>OPTION A PROTOTYPE</strong> · In-Context Prerequisite Diagnosis · Lê Thị Duyên (2A202602411)</div>
+    <button class="reset" id="resetBtn">🔄 Reset Trạng Thái</button>
   </div>
 
-  <!-- VLEARN HEADER -->
-  <header class="vlearn-header">
-    <div class="header-left">
-      <div class="back-btn" title="Quay lại">←</div>
-      <div class="course-title">Ngày 3 · Day 18+19 Design the Experiment - Human-Centered AI Design</div>
+  <div class="app">
+    <header class="header">
+      <div class="head-left">
+        <div class="brand">
+          <div class="brand-mark">V</div>Vlearn
+        </div>
+        <div class="divider"></div>
+        <button class="back">←</button>
+        <div class="lesson-title">Bài 3 · Day 18+19 Design the Experiment – Human-Centered Design</div>
+      </div>
+      <div class="concept-pill">Concept 3 · AI tư vấn, người dùng quyết</div>
+      <div class="head-right">
+        <div class="lang"><button>EN</button><button class="active">VI</button></div>
+        <div class="progress"><span>1/38 hoạt động</span>
+          <div class="track">
+            <div class="fill"></div>
+          </div>
+        </div>
+        <div class="avatar">L</div>
+      </div>
+    </header>
+
+    <div class="main">
+      <aside class="sidebar">
+        <div class="side-title">Nội dung bài học</div>
+        <div class="section">
+          <h3>DESIGN THE EXPERIMENT</h3>
+          <div class="item">
+            <div>Slide bài giảng</div>
+            <div class="meta">▾</div>
+          </div>
+          <div class="item active">
+            <div>🖥 Slide: Design the experiment</div>
+            <div class="studying">Đang học</div>
+          </div>
+          <div class="item">
+            <div>🎥 Video: Tổng quan ngày 18</div>
+            <div class="meta">4 phút</div>
+          </div>
+        </div>
+        <div class="section">
+          <h3>1. Prototype nhiều phương án</h3>
+          <div class="item">
+            <div>1.1 Hãy đưa prototype ra</div>
+            <div class="meta">4 phút</div>
+          </div>
+          <div class="item">
+            <div>1.2 Parallel Prototype</div>
+            <div class="meta">4 phút</div>
+          </div>
+          <div class="item">
+            <div>1.3 Thiết kế khác nhau thế nào?</div>
+            <div class="meta">5 phút</div>
+          </div>
+          <div class="item">
+            <div>1.4 Thí nghiệm không phải trình diễn</div>
+            <div class="meta">6 phút</div>
+          </div>
+        </div>
+        <div class="section">
+          <h3>2. Thiết kế khi AI sai</h3>
+          <div class="item">
+            <div>Slide: Human-centered AI design</div>
+            <div class="meta"></div>
+          </div>
+          <div class="item">
+            <div>2.0 Khoảng cách giữa người và AI</div>
+            <div class="meta">6 phút</div>
+          </div>
+          <div class="item">
+            <div>2.1 Khi nào nên dùng AI?</div>
+            <div class="meta">5 phút</div>
+          </div>
+          <div class="item">
+            <div>2.2 Bài học từ thực tế</div>
+            <div class="meta">6 phút</div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="center">
+        <div class="slide-wrap">
+          <div class="slide-card">
+            <section class="slide">
+              <button class="spark" id="sparkBtn">✨</button>
+              <div class="watermark">26AI.DUYENLT@VINUNI.EDU.VN</div>
+              <h1>Cùng một <span class="pain">pain</span> có thể dẫn tới nhiều cách giải</h1>
+              <div class="subtitle">Cách nào phù hợp hơn — và trong điều kiện nào?</div>
+              <div class="context"><strong>TÌNH HUỐNG</strong><br>Người học vừa trả lời sai lần thứ hai và không biết
+                tiếp tục thế nào.</div>
+              <div class="cols">
+                <article class="mech">
+                  <div class="mech-head">
+                    <h3>A · User-led</h3><span class="badge">Learner trigger</span>
+                  </div>
+                  <div class="mech-body">
+                    <div class="sim"><strong>Bạn cần hỗ trợ?</strong>
+                      <div class="btn-row"><button class="tiny primary" id="helpBtn">Help / Chẩn đoán</button></div>
+                    </div>
+                    <div class="spec"><strong>Trigger:</strong> Learner tự mở.<br><strong>Đánh đổi:</strong> Phải tự
+                      biết mình cần gì.</div>
+                  </div>
+                </article>
+                <article class="mech">
+                  <div class="mech-head">
+                    <h3>B · Collaborative</h3><span class="badge">AI asks first</span>
+                  </div>
+                  <div class="mech-body">
+                    <div class="sim">“Bạn đang lẫn hai công thức?”<div class="btn-row"><button
+                          class="tiny primary">Đúng</button><button class="tiny">Không</button></div>
+                    </div>
+                    <div class="spec"><strong>Bản chất:</strong> AI gợi ý, người dùng giữ quyền duyệt.</div>
+                  </div>
+                </article>
+                <article class="mech">
+                  <div class="mech-head">
+                    <h3>C · Proactive</h3><span class="badge">AI trigger</span>
+                  </div>
+                  <div class="mech-body">
+                    <div class="sim">“Sai 2 lần → ôn lại phần này?”<div class="btn-row"><button
+                          class="tiny primary">Xem</button><button class="tiny">Bỏ qua</button></div>
+                    </div>
+                    <div class="spec"><strong>Đánh đổi:</strong> Nhanh nhưng dễ gây gián đoạn nếu AI đoán sai.</div>
+                  </div>
+                </article>
+              </div>
+              <div class="toolbar">
+                <div class="tools">
+                  <button class="tool">✎</button><button class="tool">📖</button><button class="tool">🔍</button><button
+                    class="tool">T</button>
+                </div>
+                <div class="pager">‹ &nbsp; 7 / 23 &nbsp; ›</div>
+                <button class="notes">📘 Sổ ghi chú</button>
+              </div>
+            </section>
+          </div>
+          <div class="after-slide">
+            <div class="feedback">Nội dung này có hữu ích không? &nbsp; 👍 &nbsp; 👎</div>
+            <button class="next">Đi tới hoạt động tiếp theo →</button>
+          </div>
+        </div>
+      </main>
+
+      <aside class="ai-panel">
+        <div class="ai-shell">
+          <div class="ai-head">
+            <div class="ai-title">✨ Gợi ý thông minh từ AI</div>
+            <div class="toggle"></div>
+          </div>
+          <div class="ai-copy">AI gợi ý dựa trên slide hiện tại và dấu hiệu bạn đang dừng lại lâu ở một nội dung. Bạn
+            luôn có quyền áp dụng, xem trước hoặc bỏ qua.</div>
+
+          <div class="suggestion">
+            <div class="sug-head">
+              <div class="sug-icon">🎯</div>
+              <div>
+                <div class="sug-title">Bạn đang xem slide về experiment design</div>
+                <div class="sug-desc">Nội dung này thường đi kèm ví dụ thực tế, mini quiz và một bước kiểm tra kiến thức
+                  nền.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="suggestion">
+            <div class="sug-head">
+              <div class="sug-icon">🧠</div>
+              <div>
+                <div class="sug-title">Chẩn đoán nhanh kiến thức nền</div>
+                <div class="sug-desc">AI kiểm tra xem bạn đã nắm “Initiative Spectrum” trước khi đi sâu vào 3 cơ chế
+                  tương tác.</div>
+              </div>
+            </div>
+            <div class="sug-actions"><button class="apply" id="panelTutorBtn">Áp dụng</button><button class="preview"
+                id="previewTutorBtn">Xem trước</button><button class="skip">Bỏ qua</button></div>
+          </div>
+
+          <div class="suggestion">
+            <div class="sug-head">
+              <div class="sug-icon">▶</div>
+              <div>
+                <div class="sug-title">Xem ví dụ thực tế</div>
+                <div class="sug-desc">Minh họa cách một sản phẩm dùng A/B test để kiểm chứng giải pháp.</div>
+              </div>
+            </div>
+            <div class="sug-actions"><button class="apply">Áp dụng</button><button class="preview">Xem
+                trước</button><button class="skip">Bỏ qua</button></div>
+          </div>
+
+          <div class="suggestion">
+            <div class="sug-head">
+              <div class="sug-icon">📝</div>
+              <div>
+                <div class="sug-title">Mở note tóm tắt</div>
+                <div class="sug-desc">Tóm tắt ngắn các ý chính để bạn tiếp tục học mà không phải chuyển màn hình.</div>
+              </div>
+            </div>
+            <div class="sug-actions"><button class="apply">Áp dụng</button><button class="preview">Xem
+                trước</button><button class="skip">Bỏ qua</button></div>
+          </div>
+
+          <div class="ai-footer">✨ Không thấy gợi ý phù hợp? Bạn có thể tiếp tục học bình thường. AI sẽ không tự động ép
+            bạn rời khỏi luồng học hiện tại.</div>
+        </div>
+      </aside>
     </div>
-
-    <div class="header-right">
-      <div class="lang-badge">
-        <span>EN</span>
-        <span class="active">VI</span>
-      </div>
-
-      <div class="progress-info">
-        <span>1/38 hoạt động</span>
-        <div class="progress-bar-line">
-          <div class="progress-bar-fill"></div>
-        </div>
-      </div>
-
-      <button class="btn-top-ask" onclick="openDiagnostic()">
-        <span>✨</span> Đặt câu hỏi với AI
-      </button>
-
-      <button class="btn-top-ask" style="color: #64748b; border-color: #e2e8f0; background: #fff;">
-        <span>✋</span> Gửi yêu cầu
-      </button>
-
-      <div class="avatar-user">L</div>
-    </div>
-  </header>
-
-  <!-- MAIN APP WORKSPACE -->
-  <div class="app-workspace">
-
-    <!-- LEFT SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <span>NỘI DUNG BÀI HỌC</span>
-        <span style="color: #94a3b8; cursor: pointer;">✕</span>
-      </div>
-      <div class="lesson-list">
-        <div class="lesson-group-title">DESIGN THE EXPERIMENT</div>
-        <div class="lesson-item">
-          <span>📑</span>
-          <span>Slide: Design the experiment</span>
-        </div>
-        <div class="lesson-item">
-          <span>🎥</span>
-          <span>Video: Tổng quan ngày 18 (4 phút)</span>
-        </div>
-
-        <div class="lesson-group-title" style="margin-top: 8px;">1. PROTOTYPE NHIỀU PHƯƠNG ÁN</div>
-        <div class="lesson-item active">
-          <span>📑</span>
-          <span>Slide: Design the experiment...</span>
-          <span class="badge-studying">Đang học</span>
-        </div>
-        <div class="lesson-item">
-          <span>🎥</span>
-          <span>1.1 Hãy đưa prototype ra</span>
-        </div>
-        <div class="lesson-item">
-          <span>🎥</span>
-          <span>1.2 Parallel Prototype</span>
-        </div>
-      </div>
-    </aside>
-
-    <!-- CENTER SLIDE VIEWER -->
-    <main class="slide-viewer-container">
-      <div class="slide-stage">
-
-        <!-- SLIDE CARD -->
-        <div class="slide-card">
-          <div class="watermark">26AI.DUYENLT@VINUNI.EDU.VN</div>
-
-          <!-- CRITICAL AI TRIGGER: SPARKLES BUTTON -->
-          <div class="sparkles-button" onclick="openDiagnostic()" title="Bấm vào để AI chẩn đoán điểm tắc">
-            <div class="pulse-effect"></div>
-            <span style="font-size: 22px;">✨</span>
-          </div>
-
-          <h1 class="slide-h1">Cùng một <span class="pain">pain</span> có thể dẫn tới nhiều cách giải</h1>
-          <p class="slide-subtitle">Cách nào phù hợp hơn — và trong điều kiện nào?</p>
-
-          <div class="context-box">
-            <strong>TÌNH HUỐNG:</strong> Người học vừa trả lời sai lần thứ hai và không biết tiếp tục thế nào.
-          </div>
-
-          <div class="columns-row">
-            <!-- A: USER-LED (TRỌNG TÂM CỦA OPTION A) -->
-            <div class="col-card focused-col">
-              <span class="focused-col-badge">OPTION A BẠN LÀM</span>
-              <div class="col-title col-a">A User-led</div>
-              <div class="col-mockup">
-                <button onclick="openDiagnostic()" style="padding: 6px 14px; font-size: 11px; font-weight: 700; background: #2563eb; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
-                  🔍 Help / Chẩn đoán
-                </button>
-              </div>
-              <div class="col-field"><strong>TRIGGER</strong> Learner tự mở Help</div>
-              <div class="col-field"><strong>USER QUYẾT</strong> Chọn loại trợ giúp</div>
-              <div class="col-field"><strong>ĐÁNH ĐỔI</strong> Phải tự biết mình cần gì</div>
-            </div>
-
-            <!-- B -->
-            <div class="col-card">
-              <div class="col-title col-b">B Collaborative</div>
-              <div class="col-mockup">
-                <span style="color: #64748b; font-size: 11px;">"Bạn đang lẫn hai công thức?"</span>
-                <div style="display: flex; gap: 4px; margin-top: 6px;">
-                  <span style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 10px;">Đúng</span>
-                  <span style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 10px;">Không</span>
-                </div>
-              </div>
-              <div class="col-field"><strong>TRIGGER</strong> AI hỏi khi thấy dấu hiệu</div>
-              <div class="col-field"><strong>USER QUYẾT</strong> Xác nhận / sửa chẩn đoán</div>
-              <div class="col-field"><strong>ĐÁNH ĐỔI</strong> Thêm một bước hỏi–đáp</div>
-            </div>
-
-            <!-- C -->
-            <div class="col-card">
-              <div class="col-title col-c">C Proactive</div>
-              <div class="col-mockup">
-                <div style="background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-bottom: 4px;">
-                  Sai 2 lần → ôn lại phần này?
-                </div>
-                <div style="display: flex; gap: 4px;">
-                  <span style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 10px;">Xem</span>
-                  <span style="padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 10px;">Bỏ qua</span>
-                </div>
-              </div>
-              <div class="col-field"><strong>TRIGGER</strong> AI tự phát hiện, tự mở</div>
-              <div class="col-field"><strong>USER QUYẾT</strong> Duyệt, bỏ qua hoặc sửa</div>
-              <div class="col-field"><strong>ĐÁNH ĐỔI</strong> Dễ gián đoạn, dễ bị nghi</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ======================================================== -->
-        <!-- OPTION A INTERACTIVE POPUP (CRITICAL INTERACTION) -->
-        <!-- ======================================================== -->
-        <div class="diagnostic-popup" id="diagnostic-popup" style="display: none;">
-          <div class="popup-header">
-            <div>
-              <span class="step-tag" id="step-tag">BƯỚC 1/2 · CHẨN ĐOÁN LỖ HỔNG</span>
-              <div class="popup-title">
-                <span>🔍 AI Tutor Chẩn Đoán Tại Chỗ</span>
-              </div>
-            </div>
-            <!-- RECOVERY BUTTON: CLOSE / DISMISS -->
-            <button class="btn-close-popup" onclick="closeDiagnostic()" title="Đóng panel (Lấy lại quyền kiểm soát)">✕</button>
-          </div>
-
-          <!-- MÀN HÌNH 1: CÂU HỎI CHẨN ĐOÁN (ROLE: ASK) -->
-          <div id="step-question-view">
-            <p class="popup-body-text">
-              Bạn đang dừng lại ở slide này. Để giải tỏa thắc mắc, <strong>bạn đã hiểu rõ khái niệm "Initiative Spectrum" (Phổ chủ động) giữa User và AI chưa?</strong>
-            </p>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="selectAnswer('A')">
-                <strong>A.</strong> Đã rất rõ (Tôi biết ai là người trigger)
-              </button>
-              <button class="quiz-btn" onclick="selectAnswer('B')">
-                <strong>B.</strong> Hơi mơ hồ (Chưa phân biệt được Collaborative vs Proactive)
-              </button>
-              <button class="quiz-btn" onclick="selectAnswer('C')">
-                <strong>C.</strong> Chưa học bao giờ (Cần giải thích từ đầu)
-              </button>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8;">
-              <span>⏱️ Chẩn đoán trong 30 giây</span>
-              <span style="color: #2563eb; cursor: pointer;" onclick="closeDiagnostic()">Bỏ qua quiz này</span>
-            </div>
-          </div>
-
-          <!-- MÀN HÌNH 2: KẾT QUẢ BÙ ĐẮP KIẾN THỨC & RECOVERY -->
-          <div id="step-result-view" style="display: none;">
-            <div class="result-box">
-              <strong>💡 Khái niệm bạn đang hổng:</strong><br>
-              Bạn đang bị nhầm giữa <em>Collaborative</em> (AI xin phép trước khi làm) và <em>Proactive</em> (AI tự tiện nhảy ra màn hình).
-              <br><br>
-              <strong>Bản chất cốt lõi:</strong>
-              • Collaborative: Người dùng giữ quyền duyệt trước.<br>
-              • Proactive: Dễ gây ức chế (gián đoạn) nếu AI đoán sai.
-            </div>
-
-            <div class="popup-actions">
-              <button class="action-btn btn-continue" onclick="finishAndContinue()">
-                ✓ Đã hiểu, tiếp tục học
-              </button>
-              <button class="action-btn btn-retry" onclick="resetToQuestion()">
-                Chọn lại
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- BOTTOM VIEWER CONTROLS -->
-      <div class="bottom-bar">
-        <div class="tools-group">
-          <button class="tool-btn" title="Con trỏ">↗</button>
-          <button class="tool-btn" title="Bút vẽ">✏️</button>
-          <button class="tool-btn" title="Bút dạ quang">🖍️</button>
-          <button class="tool-btn" title="Khoanh tròn">⭕</button>
-          <button class="tool-btn" title="Viết text">T</button>
-          <div style="width: 1px; height: 18px; background: #e2e8f0; margin: 0 4px;"></div>
-          <span style="font-size: 12px; color: #64748b;">Từng trang</span>
-        </div>
-
-        <div style="font-size: 12px; font-weight: 600; color: #475569;">
-          ‹ 7 / 23 ›
-        </div>
-
-        <div class="tools-group">
-          <button class="tool-btn" title="Ghi chú">📖 Sổ ghi chú</button>
-        </div>
-      </div>
-    </main>
-
   </div>
 
-  <!-- TOAST GUIDE -->
-  <div class="toast-guide" id="toast-guide">
-    <span>💡</span>
-    <span>Click vào nút <strong>✨ AI Sparkles</strong> hoặc nút <strong>Help</strong> để trải nghiệm Option A!</span>
-  </div>
+  <aside class="modal" id="modal">
+    <button class="close" id="closeBtn">✕</button>
+    <div id="step1">
+      <div class="step">BƯỚC 1/2 · CHẨN ĐOÁN LỖ HỔNG</div>
+      <h2>🔍 AI Tutor Chẩn Đoán Tại Chỗ</h2>
+      <p>Bạn đang dừng lại ở slide này. Để hiểu rõ sự khác biệt giữa 3 cơ chế, bạn đã nắm vững khái niệm
+        <strong>“Initiative Spectrum”</strong> giữa User và AI chưa?
+      </p>
+      <div class="answers">
+        <button class="answer" data-choice="A">A. Đã rất rõ — tôi biết ai là người trigger.</button>
+        <button class="answer" data-choice="B">B. Hơi mơ hồ — chưa phân biệt Collaborative và Proactive.</button>
+        <button class="answer" data-choice="C">C. Chưa học bao giờ — cần giải thích từ đầu.</button>
+      </div>
+      <button class="skip" id="skipQuiz">Bỏ qua quiz này</button>
+    </div>
+    <div id="step2" hidden>
+      <div class="step">BƯỚC 2/2 · KIẾN THỨC BÙ ĐẮP</div>
+      <h2>💡 Bù đắp đúng chỗ hổng</h2>
+      <div class="knowledge" id="knowledge">
+        <p><strong>Khái niệm bạn đang hổng:</strong> Bạn đang bị nhầm giữa Collaborative và Proactive.</p>
+        <p><strong>Bản chất:</strong> Collaborative là AI xin phép trước khi làm; Proactive là AI tự chủ động xuất hiện
+          và có nguy cơ gây gián đoạn nếu đoán sai.</p>
+      </div>
+      <div class="result-actions"><button class="done" id="doneBtn">✓ Đã hiểu, tiếp tục học</button><button
+          class="retry" id="retryBtn">Chọn lại</button></div>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast">✓ Đã hoàn tất chẩn đoán.</div>
 
   <script>
-    function openDiagnostic() {
-      document.getElementById('diagnostic-popup').style.display = 'block';
-      document.getElementById('toast-guide').style.display = 'none';
-    }
+    (() => {
+      const modal = document.getElementById('modal');
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const knowledge = document.getElementById('knowledge');
+      const toast = document.getElementById('toast');
 
-    function closeDiagnostic() {
-      document.getElementById('diagnostic-popup').style.display = 'none';
-    }
+      const defaultKnowledge = `
+        <p><strong>Khái niệm bạn đang hổng:</strong> Bạn đang bị nhầm giữa Collaborative và Proactive.</p>
+        <p><strong>Bản chất:</strong> Collaborative là AI xin phép trước khi làm; Proactive là AI tự chủ động xuất hiện và có nguy cơ gây gián đoạn nếu đoán sai.</p>`;
 
-    function selectAnswer(choice) {
-      document.getElementById('step-question-view').style.display = 'none';
-      document.getElementById('step-result-view').style.display = 'block';
-      document.getElementById('step-tag').textContent = 'BƯỚC 2/2 · KIẾN THỨC BÙ ĐẮP (ĐÃ CHẨN ĐOÁN)';
-    }
+      const open = () => modal.classList.add('open');
+      const close = () => modal.classList.remove('open');
+      const showToast = (m) => {
+        toast.textContent = m;
+        toast.classList.add('show');
+        clearTimeout(window.__toast);
+        window.__toast = setTimeout(() => toast.classList.remove('show'), 2200);
+      };
+      const showStep1 = () => { step1.hidden = false; step2.hidden = true; };
+      const showStep2 = () => { step1.hidden = true; step2.hidden = false; };
 
-    function resetToQuestion() {
-      document.getElementById('step-question-view').style.display = 'block';
-      document.getElementById('step-result-view').style.display = 'none';
-      document.getElementById('step-tag').textContent = 'BƯỚC 1/2 · CHẨN ĐOÁN LỖ HỔNG';
-    }
+      ['sparkBtn', 'helpBtn', 'panelTutorBtn', 'previewTutorBtn'].forEach(id => {
+        document.getElementById(id).addEventListener('click', open);
+      });
+      document.getElementById('closeBtn').addEventListener('click', close);
+      document.getElementById('skipQuiz').addEventListener('click', () => { close(); showToast('Quiz đã được bỏ qua. Bạn vẫn tiếp tục học bình thường.'); });
 
-    function finishAndContinue() {
-      closeDiagnostic();
-      alert('✓ Hoàn tất phiên chẩn đoán Option A! Bạn có thể tiếp tục nghe bài giảng mà không bị gián đoạn.');
-    }
+      document.querySelectorAll('.answer').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const c = btn.dataset.choice;
+          if (c === 'A') {
+            knowledge.innerHTML = `<p><strong>Bạn đã có nền tảng.</strong> Hãy đọc slide theo 2 câu hỏi: ai khởi tạo hành động và ai giữ quyền duyệt?</p><p><strong>Gợi ý:</strong> User-led → người học trigger; Collaborative → AI đề xuất, user duyệt; Proactive → AI tự trigger.</p>`;
+          } else if (c === 'C') {
+            knowledge.innerHTML = `<p><strong>Initiative Spectrum</strong> mô tả mức độ chủ động của AI so với người dùng.</p><p><strong>Từ thấp đến cao:</strong> User-led → learner gọi AI; Collaborative → AI hỏi trước; Proactive → AI tự can thiệp. Càng chủ động, rủi ro gây gián đoạn càng cao.</p>`;
+          } else {
+            knowledge.innerHTML = defaultKnowledge;
+          }
+          showStep2();
+        });
+      });
 
-    function resetPrototype() {
-      resetToQuestion();
-      closeDiagnostic();
-      const toast = document.getElementById('toast-guide');
-      toast.style.display = 'flex';
-      setTimeout(() => { toast.style.display = 'none'; }, 4000);
-    }
-
-    // Tự động ẩn toast sau 5 giây
-    setTimeout(() => {
-      const toast = document.getElementById('toast-guide');
-      if (toast) toast.style.display = 'none';
-    }, 5000);
+      document.getElementById('retryBtn').addEventListener('click', showStep1);
+      document.getElementById('doneBtn').addEventListener('click', () => { close(); showToast('✓ Đã hiểu. AI Tutor trả bạn về đúng slide đang học.'); });
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        close(); showStep1(); knowledge.innerHTML = defaultKnowledge; showToast('🔄 Prototype đã được reset.');
+      });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    })();
   </script>
 </body>
+
 </html>
