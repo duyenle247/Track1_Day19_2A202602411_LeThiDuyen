@@ -1,14 +1,14 @@
 # Group Feedback Synthesis — Tổng hợp Phản hồi Toàn nhóm
 
-- **Nhóm:** Nhóm [Số nhóm] · **Case:** AI Tutor (Nền tảng học trực tuyến VLearn)
-- **Thành viên nhóm:** Lê Thị Duyên (2A202602411), [Thành viên 2], [Thành viên 3]
+- **Nhóm:** Matcha · **Case:** AI Tutor (Nền tảng học trực tuyến VLearn)
+- **Thành viên nhóm:** Lê Thị Duyên (2A202602411), Trần Thị Thúy, Nguyễn Thùy Linh
 - **Link Artifact tổng hợp chung của nhóm (FigJam / Google Sheets):** [Link Tổng Hợp Feedback](https://www.figma.com/file/placeholder-day19-feedback-synthesis)
 
 ---
 
 ## 1. Bảng ma trận đối chiếu 3 Phiên Kiểm thử độc lập
 
-| Tiêu chí | Feedback 1 (Tester 1 - Lê Thị Duyên facilitate) | Feedback 2 (Tester 2 - Thành viên 2 facilitate) | Feedback 3 (Tester 3 - Thành viên 3 facilitate) | Pattern hoặc Khác biệt chung |
+| Tiêu chí | Feedback 1 (Tester 1 - Lê Thị Duyên facilitate) | Feedback 2 (Tester 2 - Trần Thị Thúy) | Feedback 3 (Tester 3 - Nguyễn Thùy Linh) | Pattern hoặc Khác biệt chung |
 | :--- | :--- | :--- | :--- | :--- |
 | **Bối cảnh tester** | SV năm 3 CNTT, tự học trên Coursera / Udemy. | Người đi làm học thêm văn bằng 2 buổi tối, thời gian eo hẹp. | Học sinh cấp 3 đang tự ôn thi đại học trên nền tảng học trực tuyến. | Cả 3 đều gặp tình trạng hổng kiến thức toán/lý thuyết nền nhưng áp lực thời gian học khác nhau. |
 | **First Action** | Click ngay nút *"Chẩn đoán điểm tắc"* ở Option A; lướt nhìn sơ đồ ở Option B. | Click thử Option B trước vì thấy sơ đồ bắt mắt, nhưng lập tức bị rối; chuyển sang A. | Thử Option C (bấm ghim bookmark) vì quen thói quen ghi chú khi nghe giảng. | **Pattern:** Tester có xu hướng tìm hành động tốn ít công sức nhất ngay khi nhìn thấy màn hình. |

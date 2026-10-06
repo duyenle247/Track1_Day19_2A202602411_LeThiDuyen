@@ -2,7 +2,7 @@
 
 - **Họ và tên:** Lê Thị Duyên
 - **Mã học viên:** 2A202602411
-- **Nhóm:** Nhóm [Số nhóm] · **Case:** AI Tutor (Nền tảng học trực tuyến VLearn)
+- **Nhóm:** Matcha · **Case:** AI Tutor (Nền tảng học trực tuyến VLearn)
 
 ---
 
@@ -11,8 +11,8 @@
 | Phương án | Tên cơ chế | Link Interactive Prototype | Định dạng & Công cụ dựng | Người chịu trách nhiệm chính |
 | :--- | :--- | :--- | :--- | :--- |
 | **Option A** | In-Context Prerequisite Diagnosis | [Mở Interactive Prototype (Chạy trực tiếp)](./prototype.html) / [Figma Prototype](https://www.figma.com/proto/placeholder-day19/Option-A-Diagnosis) | HTML/CSS Interactive + Figma Clickable | **Lê Thị Duyên** |
-| **Option B** | Knowledge Graph & Concept Breakdown | [Mở Interactive Prototype (Chạy trực tiếp)](./prototype.html) / [Figma Prototype](https://www.figma.com/proto/placeholder-day19/Option-B-ConceptMap) | HTML/CSS Interactive + Figma Clickable | [Thành viên 2] |
-| **Option C** | Smart Bookmark & Socratic Sync | [Mở Interactive Prototype (Chạy trực tiếp)](./prototype.html) / [Figma Prototype](https://www.figma.com/proto/placeholder-day19/Option-C-Bookmark) | HTML/CSS Interactive + Figma Clickable | [Thành viên 3] |
+| **Option B** | Knowledge Graph & Concept Breakdown | [Mở Interactive Prototype (Chạy trực tiếp)](./prototype.html) / [Figma Prototype](https://www.figma.com/proto/placeholder-day19/Option-B-ConceptMap) | HTML/CSS Interactive + Figma Clickable | **Trần Thị Thúy** |
+| **Option C** | Smart Bookmark & Socratic Sync | [Mở Interactive Prototype (Chạy trực tiếp)](./prototype.html) / [Figma Prototype](https://www.figma.com/proto/placeholder-day19/Option-C-Bookmark) | HTML/CSS Interactive + Figma Clickable | **Nguyễn Thùy Linh** |
 
 > 💡 **Cách mở nhanh Prototype tương tác:**  
 > File micro-prototype HTML tương tác đã được tích hợp sẵn ngay trong repo tại [`prototype.html`](./prototype.html). Bạn có thể mở trực tiếp bằng bất kỳ trình duyệt nào (Chrome, Edge, Safari) để chuyển đổi qua lại giữa A / B / C và thử nghiệm tương tác mượt mà như app thật!

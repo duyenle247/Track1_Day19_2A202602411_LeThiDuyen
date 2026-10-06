@@ -2,7 +2,7 @@
 
 - **Họ và tên:** Lê Thị Duyên
 - **Mã học viên:** 2A202602411
-- **Nhóm:** Nhóm [Số nhóm] · **Case:** AI Tutor (Nền tảng học trực tuyến VLearn)
+- **Nhóm:** Matcha · **Case:** AI Tutor (Nền tảng học trực tuyến VLearn)
 - **Link Board chung của nhóm (Figma / FigJam / Miro):** [Link Figma Board](https://www.figma.com/file/placeholder-day19-ai-tutor)
 
 ---
@@ -14,8 +14,8 @@
 | Practice Note | User đã thực sự làm / nói gì? (Fact-based) | Điều nhóm đang diễn giải (Interpretation) |
 | :--- | :--- | :--- |
 | **Note 1 (Lê Thị Duyên - P01)** | User đang xem slide khó hiểu trên VLearn, không biết bắt đầu từ đâu nên chụp màn hình gửi AI ngoài với câu: *"Tôi không hiểu chỗ này, cho tôi một lộ trình hiểu cái gì trước cái gì sau"*. Gặp lỗi bôi đen/vẽ tay không chuẩn nên bỏ dở, note lại để tối về tự mò vài tiếng. Quote: *"Thật ra em cũng không biết là nên bắt đầu từ đâu..."* | User không chỉ cần lời giải thích nội dung hiện tại, mà cái họ thực sự thiếu là khả năng tự chẩn đoán xem mình bị hổng kiến thức nền nào từ trước. Họ dùng AI ngoài như một công cụ lập bản đồ kiến thức. |
-| **Note 2 (Thành viên 2 - P02)** | Khi gặp công thức toán/thuật toán phức tạp, user mở tab ChatGPT hỏi định nghĩa, nhưng nhận được một đoạn text rất dài. User đọc lướt 2 câu đầu rồi đóng tab, quay lại xem tiếp video với trạng thái lơ mơ để kịp tiến độ buổi học. | Việc AI giải thích quá dài (over-explaining) ngay giữa bài giảng làm đứt gãy mạch tập trung và tạo áp lực thời gian, khiến user thà bỏ qua còn hơn dừng lại đọc. |
-| **Note 3 (Thành viên 3 - P03)** | User highlight từ khóa khó trên màn hình và click icon trợ giúp có sẵn của web, nhưng hệ thống chỉ hiển thị tooltip định nghĩa từ điển tĩnh (static dictionary). User tắt ngay tooltip vì *"nó không liên quan gì đến ngữ cảnh bài học này"*. | Định nghĩa tĩnh tách rời ngữ cảnh bài giảng không giải quyết được việc người học không hiểu mối liên hệ giữa khái niệm mới và bài giảng hiện tại. |
+| **Note 2 (Trần Thị Thúy - P02)** | Khi gặp công thức toán/thuật toán phức tạp, user mở tab ChatGPT hỏi định nghĩa, nhưng nhận được một đoạn text rất dài. User đọc lướt 2 câu đầu rồi đóng tab, quay lại xem tiếp video với trạng thái lơ mơ để kịp tiến độ buổi học. | Việc AI giải thích quá dài (over-explaining) ngay giữa bài giảng làm đứt gãy mạch tập trung và tạo áp lực thời gian, khiến user thà bỏ qua còn hơn dừng lại đọc. |
+| **Note 3 (Nguyễn Thùy Linh - P03)** | User highlight từ khóa khó trên màn hình và click icon trợ giúp có sẵn của web, nhưng hệ thống chỉ hiển thị tooltip định nghĩa từ điển tĩnh (static dictionary). User tắt ngay tooltip vì *"nó không liên quan gì đến ngữ cảnh bài học này"*. | Định nghĩa tĩnh tách rời ngữ cảnh bài giảng không giải quyết được việc người học không hiểu mối liên hệ giữa khái niệm mới và bài giảng hiện tại. |
 
 ### 2. Thảo luận & Nhận định ban đầu
 - **Behavior & Workaround lặp lại:** Chụp ảnh màn hình / copy từ khóa ném sang chatbot bên ngoài; nản lòng khi gặp giải thích quá dài; chấp nhận bỏ qua để không lỡ luồng học và để dành về nhà tự giải quyết (tốn từ 1–3 tiếng).

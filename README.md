@@ -3,12 +3,12 @@
 ## 1. Thông tin Cá nhân & Nhóm
 - **Họ và tên:** Lê Thị Duyên
 - **Mã học viên:** 2A202602411
-- **Tên nhóm:** Nhóm [Số nhóm]
+- **Tên nhóm:** Matcha
 - **Các thành viên trong nhóm:**
   1. **Lê Thị Duyên** (2A202602411) — Chịu trách nhiệm chính: Option A
-  2. [Họ tên Thành viên 2] — Chịu trách nhiệm chính: Option B
-  3. [Họ tên Thành viên 3] — Chịu trách nhiệm chính: Option C
-- **Case nghiên cứu:** **AI Tutor — Nền tảng học trực tuyến VLearn** (Tiếp tục từ case Day 17)
+  2. **Trần Thị Thúy** — Chịu trách nhiệm chính: Option B
+  3. **Nguyễn Thùy Linh** — Chịu trách nhiệm chính: Option C
+- **Case nghiên cứu:** **AI Tutor — Nền tảng học trực tuyến VLearn**
 
 ---
 
